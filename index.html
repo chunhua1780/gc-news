@@ -3432,7 +3432,7 @@ function setLang(code){
 
 
 // ═══ 核心版本 ═══
-var CORE_VERSION='v1.64';
+var CORE_VERSION='v1.65';
 
 // ═══ 广告系统配置（统一后台广告）═══
 var ADS_CONFIG = {
@@ -8952,42 +8952,71 @@ var CAT_INFO={
   _search:{label:'搜索',emoji:'🔍',color:'#607D8B'}
 };
 var PALETTE=['#FF5722','#1565C0','#6A1B9A','#2E7D32','#E91E63','#0277BD','#00695C','#C62828','#4527A0'];
+// ── RSS 多源配置（BBC 作为底座保证图片质量，辅以本地源增加相关性）──
+var B='https://feeds.bbci.co.uk/'; // BBC base shorthand
 var GN_FEEDS={
   CN:{
-    top:'https://news.google.com/rss?hl=zh-CN&gl=CN&ceid=CN:zh',
-    world:'https://news.google.com/rss/search?q=国际新闻&hl=zh-CN&gl=CN&ceid=CN:zh',
-    tech:'https://news.google.com/rss/search?q=科技&hl=zh-CN&gl=CN&ceid=CN:zh',
-    business:'https://news.google.com/rss/search?q=财经&hl=zh-CN&gl=CN&ceid=CN:zh',
-    entertainment:'https://news.google.com/rss/search?q=娱乐&hl=zh-CN&gl=CN&ceid=CN:zh',
-    sports:'https://news.google.com/rss/search?q=体育&hl=zh-CN&gl=CN&ceid=CN:zh',
-    health:'https://news.google.com/rss/search?q=健康&hl=zh-CN&gl=CN&ceid=CN:zh'
+    top:   [B+'zhongwen/simp/rss.xml','https://news.google.com/rss?hl=zh-CN&gl=CN&ceid=CN:zh'],
+    world: [B+'news/world/rss.xml','https://news.google.com/rss/search?q=国际新闻&hl=zh-CN&gl=CN&ceid=CN:zh'],
+    tech:  [B+'news/technology/rss.xml','https://news.google.com/rss/search?q=科技&hl=zh-CN&gl=CN&ceid=CN:zh'],
+    business:[B+'news/business/rss.xml','https://news.google.com/rss/search?q=财经&hl=zh-CN&gl=CN&ceid=CN:zh'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml','https://news.google.com/rss/search?q=娱乐&hl=zh-CN&gl=CN&ceid=CN:zh'],
+    sports:[B+'sport/rss.xml','https://news.google.com/rss/search?q=体育&hl=zh-CN&gl=CN&ceid=CN:zh'],
+    health:[B+'news/health/rss.xml','https://news.google.com/rss/search?q=健康&hl=zh-CN&gl=CN&ceid=CN:zh']
   },
   US:{
-    top:'https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en',
-    world:'https://news.google.com/rss/search?q=world+news&hl=en-US&gl=US&ceid=US:en',
-    tech:'https://news.google.com/rss/search?q=technology&hl=en-US&gl=US&ceid=US:en',
-    business:'https://news.google.com/rss/search?q=business&hl=en-US&gl=US&ceid=US:en',
-    entertainment:'https://news.google.com/rss/search?q=entertainment&hl=en-US&gl=US&ceid=US:en',
-    sports:'https://news.google.com/rss/search?q=sports&hl=en-US&gl=US&ceid=US:en',
-    health:'https://news.google.com/rss/search?q=health&hl=en-US&gl=US&ceid=US:en'
+    top:   [B+'news/rss.xml','https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'],
+    world: [B+'news/world/rss.xml','https://www.aljazeera.com/xml/rss/all.xml'],
+    tech:  [B+'news/technology/rss.xml','https://www.wired.com/feed/rss'],
+    business:[B+'news/business/rss.xml','https://feeds.reuters.com/reuters/businessNews'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml','https://variety.com/feed/'],
+    sports:[B+'sport/rss.xml','https://www.espn.com/espn/rss/news'],
+    health:[B+'news/health/rss.xml','https://www.medicalnewstoday.com/rss/news.xml']
   },
   GB:{
-    top:'https://news.google.com/rss?hl=en-GB&gl=GB&ceid=GB:en',
-    world:'https://feeds.bbci.co.uk/news/world/rss.xml',
-    tech:'https://news.google.com/rss/search?q=technology&hl=en-GB&gl=GB&ceid=GB:en',
-    business:'https://news.google.com/rss/search?q=business&hl=en-GB&gl=GB&ceid=GB:en',
-    entertainment:'https://news.google.com/rss/search?q=entertainment&hl=en-GB&gl=GB&ceid=GB:en',
-    sports:'https://news.google.com/rss/search?q=sports&hl=en-GB&gl=GB&ceid=GB:en',
-    health:'https://news.google.com/rss/search?q=health&hl=en-GB&gl=GB&ceid=GB:en'
+    top:   [B+'news/rss.xml','https://www.theguardian.com/uk/rss'],
+    world: [B+'news/world/rss.xml','https://www.theguardian.com/world/rss'],
+    tech:  [B+'news/technology/rss.xml','https://www.theguardian.com/uk/technology/rss'],
+    business:[B+'news/business/rss.xml','https://www.theguardian.com/uk/business/rss'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml','https://www.theguardian.com/uk/culture/rss'],
+    sports:[B+'sport/rss.xml','https://www.theguardian.com/uk/sport/rss'],
+    health:[B+'news/health/rss.xml','https://www.theguardian.com/society/health/rss']
+  },
+  AU:{
+    top:   [B+'news/rss.xml','https://www.abc.net.au/news/feed/51120/rss.xml'],
+    world: [B+'news/world/rss.xml','https://www.abc.net.au/news/feed/2942460/rss.xml'],
+    tech:  [B+'news/technology/rss.xml','https://www.abc.net.au/news/feed/10735082/rss.xml'],
+    business:[B+'news/business/rss.xml','https://www.abc.net.au/news/feed/504882/rss.xml'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml'],
+    sports:[B+'sport/rss.xml','https://www.abc.net.au/news/feed/45910/rss.xml'],
+    health:[B+'news/health/rss.xml','https://www.abc.net.au/news/feed/10771356/rss.xml']
+  },
+  CA:{
+    top:   [B+'news/rss.xml','https://rss.cbc.ca/lineup/topstories.xml'],
+    world: [B+'news/world/rss.xml','https://rss.cbc.ca/lineup/world.xml'],
+    tech:  [B+'news/technology/rss.xml'],
+    business:[B+'news/business/rss.xml','https://rss.cbc.ca/lineup/business.xml'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml','https://rss.cbc.ca/lineup/arts.xml'],
+    sports:[B+'sport/rss.xml','https://rss.cbc.ca/lineup/sports.xml'],
+    health:[B+'news/health/rss.xml','https://rss.cbc.ca/lineup/health.xml']
+  },
+  SG:{
+    top:   [B+'news/rss.xml','https://www.straitstimes.com/RSS/Breaking-News.xml'],
+    world: [B+'news/world/rss.xml','https://www.aljazeera.com/xml/rss/all.xml'],
+    tech:  [B+'news/technology/rss.xml'],
+    business:[B+'news/business/rss.xml'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml'],
+    sports:[B+'sport/rss.xml'],
+    health:[B+'news/health/rss.xml']
   },
   DEFAULT:{
-    top:'https://feeds.bbci.co.uk/news/rss.xml',
-    world:'https://feeds.bbci.co.uk/news/world/rss.xml',
-    tech:'https://feeds.bbci.co.uk/news/technology/rss.xml',
-    business:'https://feeds.bbci.co.uk/news/business/rss.xml',
-    entertainment:'https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml',
-    sports:'https://feeds.bbci.co.uk/sport/rss.xml',
-    health:'https://feeds.bbci.co.uk/news/health/rss.xml'
+    top:   [B+'news/rss.xml','https://www.aljazeera.com/xml/rss/all.xml'],
+    world: [B+'news/world/rss.xml','https://rss.dw.com/rdf/rss-en-all'],
+    tech:  [B+'news/technology/rss.xml'],
+    business:[B+'news/business/rss.xml'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml'],
+    sports:[B+'sport/rss.xml'],
+    health:[B+'news/health/rss.xml']
   }
 };
 var _gnCountry='DEFAULT',_gnCity='',_gnCat='top',_gnLoading=false;
@@ -9042,27 +9071,31 @@ function _gnInitPin(){
   });
 }
 
+// ── 更新位置UI ──
+function _updateLocUI(){
+  var loc=document.getElementById('gnLocText');
+  if(loc)loc.textContent=_gnCity||'全球';
+}
+
 // ── IP 定位 ──
 function gcNewsDetectLocation(){
   var cached=null;
   try{cached=JSON.parse(localStorage.getItem('gc_newsLoc')||'null');}catch(e){}
   if(cached&&Date.now()-cached.t<3600*1000){
-    _gnCountry=cached.cc;_gnCity=cached.city;
-    var loc=document.getElementById('gnLocText');
-    if(loc)loc.textContent=cached.city+(cached.cc?' · '+cached.cc:'');
-    return;
+    _gnCountry=(cached.cc in GN_FEEDS)?cached.cc:'DEFAULT';
+    _gnCity=cached.city;
+    _updateLocUI();gcNewsLoad(false);return;
   }
   fetch('https://ip-api.com/json/?fields=country,countryCode,city')
     .then(function(r){return r.json();}).then(function(d){
-      _gnCountry=d.countryCode||'DEFAULT';
+      var cc=d.countryCode||'DEFAULT';
+      _gnCountry=(cc in GN_FEEDS)?cc:'DEFAULT';
       _gnCity=d.city||d.country||'';
-      var loc=document.getElementById('gnLocText');
-      if(loc)loc.textContent=_gnCity+(_gnCity&&_gnCountry?' · ':'')+_gnCountry;
-      try{localStorage.setItem('gc_newsLoc',JSON.stringify({cc:_gnCountry,city:_gnCity,t:Date.now()}));}catch(e){}
+      _updateLocUI();
+      try{localStorage.setItem('gc_newsLoc',JSON.stringify({cc:cc,city:_gnCity,t:Date.now()}));}catch(e){}
       gcNewsLoad(false);
     }).catch(function(){
-      var loc=document.getElementById('gnLocText');if(loc)loc.textContent='全球资讯';
-      gcNewsLoad(false);
+      _gnCity='Global';_updateLocUI();gcNewsLoad(false);
     });
 }
 
@@ -9081,10 +9114,49 @@ function escHtml(s){
 }
 
 function _gnImg(item){
-  return item.enclosure&&item.enclosure.link?item.enclosure.link:(item.thumbnail||'');
+  if(item.thumbnail)return item.thumbnail;
+  if(item.enclosure&&item.enclosure.link&&/\.(jpg|jpeg|png|webp|gif)/i.test(item.enclosure.link))return item.enclosure.link;
+  // Extract from description HTML (Reuters, Guardian, NYT include images in description)
+  var m=(item.description||'').match(/src=["']([^"']*\.(?:jpg|jpeg|png|webp)(?:\?[^"']*)?)/i);
+  if(m&&m[1]&&m[1].indexOf('data:')<0)return m[1];
+  if(item.enclosure&&item.enclosure.link)return item.enclosure.link;
+  return '';
 }
 function _gnDesc(item){
   return (item.description||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+}
+function _srcInitial(item){
+  return ((item.author||item.feed_title||'N')[0]||'N').toUpperCase();
+}
+
+// ── 并联抓取单源 ──
+function _fetchOne(url){
+  return fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url)+'&count=15')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status==='ok'&&d.items&&d.items.length){
+        return d.items.map(function(i){i.feed_title=d.feed&&d.feed.title;return i;});
+      }return[];
+    }).catch(function(){return[];});
+}
+
+// ── 多源并联 → 合并去重 → 按时间排序 ──
+function _fetchMulti(urls){
+  if(!Array.isArray(urls))urls=[urls];
+  return Promise.all(urls.map(_fetchOne)).then(function(results){
+    var all=[].concat.apply([],results);
+    var seen={};
+    var deduped=all.filter(function(item){
+      var key=(item.title||'').substring(0,50).toLowerCase().replace(/\s+/g,'');
+      if(!key||seen[key])return false;
+      seen[key]=true;return true;
+    });
+    deduped.sort(function(a,b){
+      var da=new Date(a.pubDate||0),db=new Date(b.pubDate||0);
+      return db-da;
+    });
+    return deduped;
+  });
 }
 
 // ── 骨架屏 ──
@@ -9159,6 +9231,11 @@ function _renderHero(parent,item,ci){
 
 function _renderArticle(parent,item,ci,idx){
   var img=_gnImg(item),desc=_gnDesc(item).substring(0,110),pal=PALETTE[idx%PALETTE.length];
+  var ini=_srcInitial(item);
+  var thumbNoImg='<div class="gn-article-ph" style="background:'+pal+';color:rgba(255,255,255,.92);font-size:20px;font-weight:900;letter-spacing:-1px;">'+ini+'</div>';
+  var thumbHtml=img
+    ?'<img class="gn-article-thumb" src="'+escHtml(img)+'" loading="lazy" onerror="this.outerHTML=\''+thumbNoImg.replace(/'/g,'\\\'').replace(/"/g,'&quot;')+'\'">'
+    :thumbNoImg;
   var el=document.createElement('div');el.className='gn-article';
   el.innerHTML='<div class="gn-article-accent" style="background:'+pal+';"></div>'
     +'<div class="gn-article-body">'
@@ -9166,9 +9243,7 @@ function _renderArticle(parent,item,ci,idx){
       +'<div class="gn-article-title">'+escHtml(item.title||'')+'</div>'
       +(desc?'<div class="gn-article-desc">'+escHtml(desc)+'</div>':'')
       +'<div class="gn-article-time">'+gnFmtTime(item.pubDate)+'</div>'
-    +'</div>'
-    +(img?'<img class="gn-article-thumb" src="'+escHtml(img)+'" loading="lazy" onerror="this.outerHTML=\'<div class=gn-article-ph style=background:'+pal+'15>'+ci.emoji+'</div>\'">'
-        :'<div class="gn-article-ph" style="background:'+pal+'15;">'+ci.emoji+'</div>');
+    +'</div>'+thumbHtml;
   el.addEventListener('click',function(){try{window.open(item.link,'_blank');}catch(e){}});
   parent.appendChild(el);
 }
@@ -9189,51 +9264,42 @@ function _renderMini(parent,item,ci){
   parent.appendChild(el);
 }
 
-// ── 搜索新闻（Enter触发，同时检测PIN）──
+// ── 关键词搜索（Enter触发）──
 function gcNewsSearch(term){
   if(_gnLoading)return;
   var cc=(_gnCountry in GN_FEEDS)?_gnCountry:'DEFAULT';
-  var rss;
-  if(cc==='CN')rss='https://news.google.com/rss/search?q='+encodeURIComponent(term)+'&hl=zh-CN&gl=CN&ceid=CN:zh';
-  else if(cc==='US')rss='https://news.google.com/rss/search?q='+encodeURIComponent(term)+'&hl=en-US&gl=US&ceid=US:en';
-  else if(cc==='GB')rss='https://news.google.com/rss/search?q='+encodeURIComponent(term)+'&hl=en-GB&gl=GB&ceid=GB:en';
-  else rss='https://news.google.com/rss/search?q='+encodeURIComponent(term);
+  var hl='en-US',gl='US',ceid='US:en';
+  if(cc==='CN'){hl='zh-CN';gl='CN';ceid='CN:zh';}
+  else if(cc==='GB'){hl='en-GB';gl='GB';ceid='GB:en';}
+  else if(cc==='AU'){hl='en-AU';gl='AU';ceid='AU:en';}
+  var rss='https://news.google.com/rss/search?q='+encodeURIComponent(term)+'&hl='+hl+'&gl='+gl+'&ceid='+ceid;
   gnShowSkeletons();_gnLoading=true;
-  fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(rss)+'&count=20')
-    .then(function(r){return r.json();}).then(function(d){
-      _gnLoading=false;
-      if(d.status==='ok'&&d.items&&d.items.length){
-        d.items=d.items.map(function(i){i.feed_title=d.feed&&d.feed.title;return i;});
-        gnRender(d.items);
-      }else gnRender([]);
-    }).catch(function(){_gnLoading=false;gnRender([]);});
+  _fetchOne(rss).then(function(items){
+    _gnLoading=false;
+    gnRender(items&&items.length?items:[]);
+  });
 }
 
-// ── 拉取新闻 ──
+// ── 拉取新闻（多源并联）──
 function gcNewsLoad(forceRefresh){
   if(_gnLoading)return;
   var cat=(_gnCat==='_search')?'top':_gnCat;
   var cc=(_gnCountry in GN_FEEDS)?_gnCountry:'DEFAULT';
-  var rssUrl=GN_FEEDS[cc][cat]||GN_FEEDS.DEFAULT.top;
-  var key='gc_news5_'+cc+'_'+cat;
+  var urls=GN_FEEDS[cc][cat]||GN_FEEDS.DEFAULT.top;
+  var key='gc_news6_'+cc+'_'+cat;
   var cached=null;
   try{cached=JSON.parse(localStorage.getItem(key)||'null');}catch(e){}
   if(cached&&cached.items&&!forceRefresh&&Date.now()-cached.t<1800000){gnRender(cached.items);return;}
   if(cached&&cached.items)gnRender(cached.items);else gnShowSkeletons();
   _gnLoading=true;
-  fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(rssUrl)+'&count=20')
-    .then(function(r){return r.json();}).then(function(d){
-      _gnLoading=false;
-      if(d.status==='ok'&&d.items&&d.items.length){
-        d.items=d.items.map(function(i){i.feed_title=d.feed&&d.feed.title;return i;});
-        try{localStorage.setItem(key,JSON.stringify({items:d.items,t:Date.now()}));}catch(e){}
-        gnRender(d.items);
-      }else if(cc!=='DEFAULT'){_gnCountry='DEFAULT';gcNewsLoad(true);}
-      else gnRender(cached&&cached.items?cached.items:[]);
-    }).catch(function(){
-      _gnLoading=false;
-      if(cached&&cached.items)gnRender(cached.items);else gnRender([]);
-    });
+  _fetchMulti(urls).then(function(items){
+    _gnLoading=false;
+    if(items&&items.length){
+      try{localStorage.setItem(key,JSON.stringify({items:items,t:Date.now()}));}catch(e){}
+      gnRender(items);
+    }else if(cc!=='DEFAULT'){_gnCountry='DEFAULT';gcNewsLoad(true);}
+    else gnRender(cached&&cached.items?cached.items:[]);
+  });
 }
 
 // ── 切分类 ──
