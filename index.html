@@ -1931,7 +1931,7 @@ textarea.field-input{resize:none;line-height:1.5;}
           if(e.data && e.data.type === 'openChat' && e.data.senderId){
             var sid=String(e.data.senderId);
             var activeScreen=(document.querySelector('.screen.active')||{}).id||'';
-            var disguiseScreens=['dweather','dcalc','dclk','dnote','testgate','applock'];
+            var disguiseScreens=['dweather','dcalc','dclk','dnote','newsHome','testgate','applock'];
             if(disguiseScreens.indexOf(activeScreen)>=0){
               // 当前在伪装/认证界面，记住目标，等用户解锁后再跳
               _lockReturnScreen='chat:'+sid;
