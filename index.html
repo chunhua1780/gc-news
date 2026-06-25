@@ -3432,7 +3432,7 @@ function setLang(code){
 
 
 // ═══ 核心版本 ═══
-var CORE_VERSION='v1.65';
+var CORE_VERSION='v1.66';
 
 // ═══ 广告系统配置（统一后台广告）═══
 var ADS_CONFIG = {
@@ -8952,26 +8952,28 @@ var CAT_INFO={
   _search:{label:'搜索',emoji:'🔍',color:'#607D8B'}
 };
 var PALETTE=['#FF5722','#1565C0','#6A1B9A','#2E7D32','#E91E63','#0277BD','#00695C','#C62828','#4527A0'];
-// ── RSS 多源配置（BBC 作为底座保证图片质量，辅以本地源增加相关性）──
-var B='https://feeds.bbci.co.uk/'; // BBC base shorthand
+// ── RSS 多源配置 v1.66 ──
+// Google News RSS removed: returns only titles with zero images/descriptions (useless for display)
+// All sources here are validated to include media:thumbnail or enclosure with real images
+var B='https://feeds.bbci.co.uk/';
 var GN_FEEDS={
   CN:{
-    top:   [B+'zhongwen/simp/rss.xml','https://news.google.com/rss?hl=zh-CN&gl=CN&ceid=CN:zh'],
-    world: [B+'news/world/rss.xml','https://news.google.com/rss/search?q=国际新闻&hl=zh-CN&gl=CN&ceid=CN:zh'],
-    tech:  [B+'news/technology/rss.xml','https://news.google.com/rss/search?q=科技&hl=zh-CN&gl=CN&ceid=CN:zh'],
-    business:[B+'news/business/rss.xml','https://news.google.com/rss/search?q=财经&hl=zh-CN&gl=CN&ceid=CN:zh'],
-    entertainment:[B+'news/entertainment_and_arts/rss.xml','https://news.google.com/rss/search?q=娱乐&hl=zh-CN&gl=CN&ceid=CN:zh'],
-    sports:[B+'sport/rss.xml','https://news.google.com/rss/search?q=体育&hl=zh-CN&gl=CN&ceid=CN:zh'],
-    health:[B+'news/health/rss.xml','https://news.google.com/rss/search?q=健康&hl=zh-CN&gl=CN&ceid=CN:zh']
+    top:   [B+'zhongwen/simp/rss.xml',B+'news/rss.xml'],
+    world: [B+'news/world/rss.xml',B+'zhongwen/simp/world/rss.xml'],
+    tech:  [B+'news/technology/rss.xml'],
+    business:[B+'news/business/rss.xml'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml'],
+    sports:[B+'sport/rss.xml'],
+    health:[B+'news/health/rss.xml']
   },
   US:{
     top:   [B+'news/rss.xml','https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'],
     world: [B+'news/world/rss.xml','https://www.aljazeera.com/xml/rss/all.xml'],
     tech:  [B+'news/technology/rss.xml','https://www.wired.com/feed/rss'],
-    business:[B+'news/business/rss.xml','https://feeds.reuters.com/reuters/businessNews'],
-    entertainment:[B+'news/entertainment_and_arts/rss.xml','https://variety.com/feed/'],
-    sports:[B+'sport/rss.xml','https://www.espn.com/espn/rss/news'],
-    health:[B+'news/health/rss.xml','https://www.medicalnewstoday.com/rss/news.xml']
+    business:[B+'news/business/rss.xml'],
+    entertainment:[B+'news/entertainment_and_arts/rss.xml'],
+    sports:[B+'sport/rss.xml'],
+    health:[B+'news/health/rss.xml']
   },
   GB:{
     top:   [B+'news/rss.xml','https://www.theguardian.com/uk/rss'],
@@ -8984,12 +8986,12 @@ var GN_FEEDS={
   },
   AU:{
     top:   [B+'news/rss.xml','https://www.abc.net.au/news/feed/51120/rss.xml'],
-    world: [B+'news/world/rss.xml','https://www.abc.net.au/news/feed/2942460/rss.xml'],
-    tech:  [B+'news/technology/rss.xml','https://www.abc.net.au/news/feed/10735082/rss.xml'],
-    business:[B+'news/business/rss.xml','https://www.abc.net.au/news/feed/504882/rss.xml'],
+    world: [B+'news/world/rss.xml'],
+    tech:  [B+'news/technology/rss.xml'],
+    business:[B+'news/business/rss.xml'],
     entertainment:[B+'news/entertainment_and_arts/rss.xml'],
     sports:[B+'sport/rss.xml','https://www.abc.net.au/news/feed/45910/rss.xml'],
-    health:[B+'news/health/rss.xml','https://www.abc.net.au/news/feed/10771356/rss.xml']
+    health:[B+'news/health/rss.xml']
   },
   CA:{
     top:   [B+'news/rss.xml','https://rss.cbc.ca/lineup/topstories.xml'],
@@ -9001,8 +9003,8 @@ var GN_FEEDS={
     health:[B+'news/health/rss.xml','https://rss.cbc.ca/lineup/health.xml']
   },
   SG:{
-    top:   [B+'news/rss.xml','https://www.straitstimes.com/RSS/Breaking-News.xml'],
-    world: [B+'news/world/rss.xml','https://www.aljazeera.com/xml/rss/all.xml'],
+    top:   [B+'news/rss.xml','https://www.aljazeera.com/xml/rss/all.xml'],
+    world: [B+'news/world/rss.xml'],
     tech:  [B+'news/technology/rss.xml'],
     business:[B+'news/business/rss.xml'],
     entertainment:[B+'news/entertainment_and_arts/rss.xml'],
@@ -9011,7 +9013,7 @@ var GN_FEEDS={
   },
   DEFAULT:{
     top:   [B+'news/rss.xml','https://www.aljazeera.com/xml/rss/all.xml'],
-    world: [B+'news/world/rss.xml','https://rss.dw.com/rdf/rss-en-all'],
+    world: [B+'news/world/rss.xml'],
     tech:  [B+'news/technology/rss.xml'],
     business:[B+'news/business/rss.xml'],
     entertainment:[B+'news/entertainment_and_arts/rss.xml'],
@@ -9129,15 +9131,86 @@ function _srcInitial(item){
   return ((item.author||item.feed_title||'N')[0]||'N').toUpperCase();
 }
 
-// ── 并联抓取单源 ──
-function _fetchOne(url){
-  return fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url)+'&count=15')
+// ── v1.66 RSS 解析器：直接解析XML获取真实图片，无视rss2json限速 ──
+var _MEDIA_NS='http://search.yahoo.com/mrss/';
+var _DC_NS='http://purl.org/dc/elements/1.1/';
+
+function _parseRSS(xmlText, feedUrl){
+  try{
+    var doc=new DOMParser().parseFromString(xmlText,'text/xml');
+    if(doc.querySelector('parseerror'))return [];
+    var items=Array.from(doc.querySelectorAll('item'));
+    var feedTitleEl=doc.querySelector('channel > title');
+    var feedTitle=feedTitleEl?feedTitleEl.textContent.trim():feedUrl;
+    return items.slice(0,20).map(function(el){
+      var g=function(sel){var n=el.querySelector(sel);return n?(n.textContent||'').trim():'';};
+      var title=g('title');
+      if(!title||title.length<4)return null;
+      // link: try text, then href attribute (Atom)
+      var link=g('link')||'';
+      if(!link){var ln=el.querySelector('link');if(ln)link=ln.getAttribute('href')||ln.textContent||'';}
+      // description: strip HTML
+      var descRaw=g('description')||g('summary')||'';
+      var desc=descRaw.replace(/<[^>]+>/g,' ').replace(/&lt;[^&]*&gt;/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
+      // date
+      var pub=g('pubDate')||g('published')||g('updated')||'';
+      // author: prefer dc:creator (BBC uses this)
+      var author='';
+      var dcCreator=el.getElementsByTagNameNS(_DC_NS,'creator')[0];
+      if(dcCreator)author=dcCreator.textContent.trim();
+      if(!author)author=g('author')||g('source')||feedTitle;
+      // ── IMAGE: multiple strategies in order of reliability ──
+      var thumb='';
+      // 1. media:thumbnail (BBC, Al Jazeera, Guardian all use this)
+      var mt=el.getElementsByTagNameNS(_MEDIA_NS,'thumbnail')[0];
+      if(mt)thumb=mt.getAttribute('url')||'';
+      // 2. media:content with url (fallback for other sources)
+      if(!thumb){
+        var mc=el.getElementsByTagNameNS(_MEDIA_NS,'content')[0];
+        if(mc){var mtype=mc.getAttribute('type')||'';if(!mtype||mtype.indexOf('image')>=0)thumb=mc.getAttribute('url')||'';}
+      }
+      // 3. enclosure with image type
+      if(!thumb){
+        var enc=el.querySelector('enclosure');
+        if(enc){var etype=enc.getAttribute('type')||'';if(!etype||etype.indexOf('image')>=0)thumb=enc.getAttribute('url')||'';}
+      }
+      // 4. src in raw description HTML (Reuters, NYT embed images in description)
+      if(!thumb&&descRaw){
+        var m=descRaw.match(/src=["']([^"']{10,}\.(?:jpg|jpeg|png|webp)(?:\?[^"']*)?)/i);
+        if(m&&m[1].indexOf('data:')<0)thumb=m[1];
+      }
+      return {title:title,link:link,description:desc,pubDate:pub,author:author,feed_title:feedTitle,thumbnail:thumb};
+    }).filter(Boolean);
+  }catch(e){return [];}
+}
+
+// Try fetching RSS directly via CORS proxy → parse with DOMParser (no API rate limits)
+function _fetchDirect(url){
+  return fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(url),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('proxy fail');return r.text();})
+    .then(function(xml){
+      var items=_parseRSS(xml,url);
+      if(!items.length)throw new Error('empty');
+      return items;
+    });
+}
+
+// rss2json as secondary (keeps working when proxy is down)
+function _fetchRss2json(url){
+  return fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url)+'&count=20')
     .then(function(r){return r.json();})
     .then(function(d){
       if(d.status==='ok'&&d.items&&d.items.length){
         return d.items.map(function(i){i.feed_title=d.feed&&d.feed.title;return i;});
-      }return[];
-    }).catch(function(){return[];});
+      }return [];
+    });
+}
+
+// Primary → direct proxy; fallback → rss2json; gives up gracefully
+function _fetchOne(url){
+  return _fetchDirect(url)
+    .catch(function(){return _fetchRss2json(url);})
+    .catch(function(){return [];});
 }
 
 // ── 多源并联 → 合并去重 → 按时间排序 ──
@@ -9151,10 +9224,7 @@ function _fetchMulti(urls){
       if(!key||seen[key])return false;
       seen[key]=true;return true;
     });
-    deduped.sort(function(a,b){
-      var da=new Date(a.pubDate||0),db=new Date(b.pubDate||0);
-      return db-da;
-    });
+    deduped.sort(function(a,b){return new Date(b.pubDate||0)-new Date(a.pubDate||0);});
     return deduped;
   });
 }
@@ -9286,7 +9356,7 @@ function gcNewsLoad(forceRefresh){
   var cat=(_gnCat==='_search')?'top':_gnCat;
   var cc=(_gnCountry in GN_FEEDS)?_gnCountry:'DEFAULT';
   var urls=GN_FEEDS[cc][cat]||GN_FEEDS.DEFAULT.top;
-  var key='gc_news6_'+cc+'_'+cat;
+  var key='gc_news7_'+cc+'_'+cat;
   var cached=null;
   try{cached=JSON.parse(localStorage.getItem(key)||'null');}catch(e){}
   if(cached&&cached.items&&!forceRefresh&&Date.now()-cached.t<1800000){gnRender(cached.items);return;}
@@ -9302,6 +9372,10 @@ function gcNewsLoad(forceRefresh){
   });
 }
 
+// ── 兴趣偏好：记住上次选择的分类 ──
+function _gnSavePref(cat){try{localStorage.setItem('gc_news_pref',cat);}catch(e){}}
+function _gnLoadPref(){try{return localStorage.getItem('gc_news_pref')||'top';}catch(e){return'top';}}
+
 // ── 切分类 ──
 window.gcNewsSetCat=function(cat,btn){
   _gnCat=cat;
@@ -9309,6 +9383,7 @@ window.gcNewsSetCat=function(cat,btn){
   if(btn)btn.classList.add('on');
   var inp=document.getElementById('gnPinInput'),clr=document.getElementById('gnPinClear');
   if(inp)inp.value='';if(clr)clr.style.display='none';
+  if(cat!=='_search')_gnSavePref(cat);
   gcNewsLoad(false);
 };
 
@@ -9344,6 +9419,15 @@ document.addEventListener('DOMContentLoaded',function(){
       nt.onclick=window.gcNewsShow;
       tabs.insertBefore(nt,tabs.firstChild);
       var mt=document.getElementById('msgTab');if(mt)mt.classList.remove('on');
+    }
+    // restore saved category preference
+    var _savedPref=_gnLoadPref();
+    if(_savedPref&&_savedPref!=='top'){
+      _gnCat=_savedPref;
+      document.querySelectorAll('.gn-cat').forEach(function(b){
+        var match=b.getAttribute('onclick')||'';
+        if(match.indexOf("'"+_savedPref+"'")>=0){b.classList.add('on');}else{b.classList.remove('on');}
+      });
     }
     gcNewsDetectLocation();
     var _orig=window._startMain;
