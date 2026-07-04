@@ -1,5 +1,5 @@
 ﻿// GhostChat Service Worker v2.0 — stale-while-revalidate + push
-const CACHE = 'gc-v1.69';
+const CACHE = 'gc-v1.70';
 const GC_BASE_URL = self.location.origin + self.location.pathname.replace(/[^/]*$/, '');
 
 // ── Install: pre-cache shell ──
